@@ -37,6 +37,9 @@ export const getAlumnoById = async (req, res) => {
 };
 
 export const createAlumno = async (req, res) => {
+
+  console.log('Request body:', req.body);
+  console.log('Request file:', req.file);
   const {
     nombre,
     apellido,
@@ -56,6 +59,8 @@ export const createAlumno = async (req, res) => {
   try {
     let imagenUrl = "";
     if (req.file) {
+      console.log('Subiendo archivo a Cloudinary:', req.file.path);
+
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: "uploads",
         width: 150,
@@ -63,6 +68,8 @@ export const createAlumno = async (req, res) => {
         crop: "fill", // Esta opción asegura que la imagen será redimensionada exactamente a 150x150 píxeles
       });
       imagenUrl = result.secure_url;
+      console.log('URL de la imagen en Cloudinary:', imagenUrl);
+
       fs.unlinkSync(req.file.path); // Eliminar el archivo local después de subirlo a Cloudinary
     }
 
@@ -84,6 +91,8 @@ export const createAlumno = async (req, res) => {
     });
 
     await newAlumno.save();
+    console.log('Alumno creado:', newAlumno);
+
     res
       .status(201)
       .json({
@@ -91,6 +100,8 @@ export const createAlumno = async (req, res) => {
         alumno: newAlumno,
       });
   } catch (error) {
+    console.error('Error al crear alumno:', error);
+
     return res.status(500).json({ message: error.message });
   }
 };

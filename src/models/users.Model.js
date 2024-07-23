@@ -3,14 +3,28 @@ import { Schema } from "mongoose";
 
 const userSchema = new Schema(
   {
-    nombre: String,
-    apellido: String,
+    nombre: {
+      type: String,
+      required: true,
+    },
+    apellido: {
+      type: String,
+      required: true,
+    },
     email: {
       type: String,
       required: true,
       unique: true,
     },
     password: {
+      type: String,
+      required: true,
+    },
+    telefono: {
+      type: Number,
+      required: true,
+    },
+    direccion: {
       type: String,
       required: true,
     },

@@ -6,8 +6,8 @@ const router = Router();
 
 router.get('/alumnos', getAllAlumnos);
 router.get('/alumno/:id', getAlumnoById);
-router.post('/alumnos', upload.single('imagen'), createAlumno);
-router.put('/alumno/:id', upload.single('imagen'), updateAlumno);
+router.post('/alumnos', upload.single('imagen'), createAlumno); // Asegúrate de que `upload` se maneje dentro del controlador `createAlumno`
+router.put('/alumno/:id', upload.single('imagen'), updateAlumno); // Asegúrate de que `upload` se maneje dentro del controlador `updateAlumno`
 router.delete('/alumnos/:id', deleteAlumno);
 router.get('/alumno/dni/:dni', getAlumnoByDni);
 router.get('/alumno/posicion/:posicion', getAlumnoByPosicion);

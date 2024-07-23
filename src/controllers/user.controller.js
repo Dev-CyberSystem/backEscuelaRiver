@@ -17,10 +17,10 @@ const getAllUsers = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { nombre, apellido, admin } = req.body;
+    const { nombre, apellido, telefono, direccion, admin } = req.body;
     const updateUsuario = await UserModel.findByIdAndUpdate(
       id,
-      { nombre, apellido, admin },
+      { nombre, apellido, telefono, direccion, admin },
       { new: true }
     );
     res.json(updateUsuario);
@@ -47,7 +47,7 @@ const deleteUsuario = async (req, res) => {
 
 const registroUsuario = async (req, res) => {
   try {
-    const { nombre, apellido, email, password, admin } = req.body;
+    const { nombre, apellido, email, password, telefono, direccion, admin } = req.body;
 
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(password, salt);
@@ -57,6 +57,8 @@ const registroUsuario = async (req, res) => {
       apellido,
       email,
       password: passwordHash,
+      telefono,
+      direccion,
       admin,
     });
     const user = await newUser.save();

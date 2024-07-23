@@ -5,9 +5,13 @@ import path from 'path';
 const __dirname = path.resolve();
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
+    console.log('Destino de almacenamiento:', path.join(__dirname, 'uploads'));
     cb(null, path.join(__dirname, 'uploads')); // Guardar los archivos en la carpeta uploads
   },
+
   filename: function (req, file, cb) {
+    console.log('Nombre del archivo:', `${Date.now()}-${file.originalname}`);
+
     cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
