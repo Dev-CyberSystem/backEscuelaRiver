@@ -59,19 +59,20 @@ export const createAlumno = async (req, res) => {
   try {
     let imagenUrl = "";
     if (req.file) {
-      console.log('Subiendo archivo a Cloudinary:', req.file.path);
+      console.log(req.file);
+      const filePath = path.join(__dirname, 'uploads', req.file.filename);
+      console.log('Destino de almacenamiento:', filePath); // Agregar log para verificar la ruta
 
-      const result = await cloudinary.uploader.upload(req.file.path, {
+      const result = await cloudinary.uploader.upload(filePath, {
         folder: "uploads",
         width: 150,
         height: 150,
         crop: "fill", // Esta opción asegura que la imagen será redimensionada exactamente a 150x150 píxeles
       });
       imagenUrl = result.secure_url;
-      console.log('URL de la imagen en Cloudinary:', imagenUrl);
-
-      fs.unlinkSync(req.file.path); // Eliminar el archivo local después de subirlo a Cloudinary
+      fs.unlinkSync(filePath); // Eliminar el archivo local después de subirlo a Cloudinary
     }
+
 
     const newAlumno = new Alumno({
       nombre,
