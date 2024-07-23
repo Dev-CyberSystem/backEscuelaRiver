@@ -9,6 +9,11 @@ import alumnoRouter from "./routes/alumnos.route.js";
 import fs from 'fs';
 import path from 'path';
 import "./db/db_connection.js";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 
@@ -17,7 +22,7 @@ app.use(morgan("dev"));
 app.use(cors());
 
 // Definir la ruta absoluta para la carpeta de subidas
-const __dirname = path.resolve();
+// const __dirname = path.resolve();
 const uploadsDir = path.join(__dirname, 'uploads');
 
 // Crear la carpeta 'uploads' si no existe

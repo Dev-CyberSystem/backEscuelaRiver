@@ -2,6 +2,11 @@ import Alumno from "../models/alumnos.model.js";
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -87,12 +92,10 @@ export const createAlumno = async (req, res) => {
     });
 
     await newAlumno.save();
-    res
-      .status(201)
-      .json({
-        message: "El alumno se ha creado exitosamente",
-        alumno: newAlumno,
-      });
+    res.status(201).json({
+      message: "El alumno se ha creado exitosamente",
+      alumno: newAlumno,
+    });
   } catch (error) {
     console.error("Error al crear alumno:", error);
     return res.status(500).json({ message: error.message });
