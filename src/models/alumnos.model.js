@@ -158,6 +158,13 @@ const AlumnoSchema = new Schema({
     type: String,
     required: true,
   },
+  pagos: [
+    {
+      mes: String,
+      pagado: Boolean,
+      fechaPago: Date,
+    },
+  ],
   habilitado: {
     type: Boolean,
     default: true,
