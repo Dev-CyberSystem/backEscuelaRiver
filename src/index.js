@@ -34,7 +34,7 @@ if (!fs.existsSync(uploadsDir)) {
 app.use("/api", alumnoRouter);
 app.use("/api", userRouter);
 app.use("/api", comprobacionJwt, privateRouter);
-app.use("/api", pagos)
+app.use("/api", comprobacionJwt, pagos)
 
 app.get("/", (req, res) => {
   res.send("Bienvenido a la API Escuelas River Tucumán");

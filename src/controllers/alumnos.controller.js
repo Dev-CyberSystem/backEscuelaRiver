@@ -15,11 +15,27 @@ cloudinary.config({
 });
 
 export const getAllAlumnos = async (req, res) => {
+  // try {
+  //   const alumnos = await Alumno.find();
+  //   const pagos = await Pago.find();
+
+  //   const alumnosConPagos = alumnos.map(alumno => {
+  //     const pagosAlumno = pagos.filter(pago => pago.alumnoId.toString() === alumno._id.toString());
+  //     return {
+  //       ...alumno.toObject(),
+  //       pagos: pagosAlumno,
+  //     };
+  //   });
+
+  //   res.status(200).json(alumnosConPagos);
+  // } catch (error) {
+  //   return res.status(500).json({ message: error.message });
+  // }
   try {
-    const alumnos = await Alumno.find();
+    const alumnos = await Alumno.find().populate('pagos');
     res.status(200).json(alumnos);
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    res.status(500).json({ message: 'Error al obtener alumnos', error });
   }
 };
 

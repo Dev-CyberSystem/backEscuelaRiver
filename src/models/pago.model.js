@@ -1,25 +1,25 @@
-import mongoose from 'mongoose';
+import { Schema, model } from "mongoose";
 
-const PagoSchema = new mongoose.Schema({
-  alumno: {
-    type: mongoose.Schema.Types.ObjectId,
+const PagoSchema = new Schema({
+  alumnoId: {
+    type: Schema.Types.ObjectId,
     ref: 'Alumno',
-    required: true
+    required: true,
   },
   mes: {
     type: Number,
-    required: true
+    required: true,
   },
   monto: {
     type: Number,
-    required: true
+    required: true,
   },
   fechaPago: {
     type: Date,
-    required: true
+    required: true,
   }
 }, {
-  timestamps: true
+  timestamps: true,
 });
 
-export default mongoose.model('Pago', PagoSchema);
+export default model("Pago", PagoSchema);
