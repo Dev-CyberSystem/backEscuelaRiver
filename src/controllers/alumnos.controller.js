@@ -40,20 +40,14 @@ export const getAllAlumnos = async (req, res) => {
 };
 
 export const getAlumnoById = async (req, res) => {
-  const { id } = req.params;
-
   try {
-    const alumnoFound = await Alumno.findById(id);
-
-    if (!alumnoFound) {
-      return res
-        .status(404)
-        .json({ message: "No hemos podido encontrar el alumno solicitado" });
+    const alumno = await Alumno.findById(req.params.id).populate('pagos');
+    if (!alumno) {
+      return res.status(404).json({ message: 'Alumno no encontrado' });
     }
-
-    res.status(200).json(alumnoFound);
+    res.json(alumno);
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    res.status(500).json({ message: 'Error al obtener el alumno', error });
   }
 };
 
