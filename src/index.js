@@ -6,6 +6,7 @@ import userRouter from "./routes/users.routes.js";
 import privateRouter from "./routes/private.route.js";
 import comprobacionJwt from "./middleware/comprobacionJwt.js";
 import alumnoRouter from "./routes/alumnos.route.js";
+import pagos from "./routes/pagos.route.js";
 import fs from 'fs';
 import path from 'path';
 import "./db/db_connection.js";
@@ -33,6 +34,7 @@ if (!fs.existsSync(uploadsDir)) {
 app.use("/api", alumnoRouter);
 app.use("/api", userRouter);
 app.use("/api", comprobacionJwt, privateRouter);
+app.use("/api", pagos)
 
 app.get("/", (req, res) => {
   res.send("Bienvenido a la API Escuelas River Tucumán");
