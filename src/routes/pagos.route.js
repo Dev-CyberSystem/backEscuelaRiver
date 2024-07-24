@@ -1,9 +1,12 @@
 import { Router } from 'express';
-import { registrarPago, verificarPagosPendientes } from '../controllers/pagos.controller.js';
+import { registrarPago, getPagos, getPagosPorMes, getPagosPorAlumno, verificarPagos } from '../controllers/pagos.controller.js';
 
 const router = Router();
 
-router.post('/pago/:id', registrarPago);
-router.get('/pagos-pendientes', verificarPagosPendientes);
+router.post('/pagos', registrarPago);
+router.get('/pagos', getPagos);
+router.get('/pagos/:mes', getPagosPorMes);
+router.get('/pagos/alumno/:id', getPagosPorAlumno);
+router.get('/verificar-pagos', verificarPagos);
 
 export default router;
