@@ -32,7 +32,7 @@ if (!fs.existsSync(uploadsDir)) {
 // Rutas
 app.use("/api", alumnoRouter);
 app.use("/api", userRouter);
-// app.use("/api", comprobacionJwt, privateRouter);
+app.use("/api", comprobacionJwt, privateRouter);
 
 app.get("/", (req, res) => {
   res.send("Bienvenido a la API Escuelas River Tucumán");

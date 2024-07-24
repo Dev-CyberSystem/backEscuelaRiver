@@ -104,54 +104,33 @@ export const createAlumno = async (req, res) => {
 
 export const updateAlumno = async (req, res) => {
   const { id } = req.params;
-  const {
-    nombre,
-    apellido,
-    dni,
-    categoria,
-    fechaNacimiento,
-    telefono,
-    direccion,
-    email,
-    padreTutor,
-    telefonoContacto,
-    posicion,
-    fechaIngreso,
-    observaciones,
-  } = req.body;
 
   try {
-    let imagenUrl = req.body.imagen;
+    let updateData = { ...req.body };
 
     if (req.file) {
-      const result = await cloudinary.uploader.upload(req.file.path);
-      imagenUrl = result.secure_url;
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "uploads",
+        width: 150,
+        height: 150,
+        crop: "fill",
+      });
+      updateData.imagen = result.secure_url;
       fs.unlinkSync(req.file.path); // Eliminar el archivo local después de subirlo a Cloudinary
     }
 
-    const alumnoUpdated = await Alumno.findByIdAndUpdate(
-      id,
-      {
-        nombre,
-        apellido,
-        dni,
-        categoria,
-        fechaNacimiento,
-        telefono,
-        direccion,
-        email,
-        padreTutor,
-        telefonoContacto,
-        posicion,
-        fechaIngreso,
-        observaciones,
-        imagen: imagenUrl,
-      },
-      { new: true }
-    );
+    const alumnoUpdated = await Alumno.findByIdAndUpdate(id, updateData, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!alumnoUpdated) {
+      return res.status(404).json({ message: "Alumno no encontrado" });
+    }
 
     res.status(200).json(alumnoUpdated);
   } catch (error) {
+    console.error("Error al actualizar el alumno:", error);
     return res.status(500).json({ message: error.message });
   }
 };
