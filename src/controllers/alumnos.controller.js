@@ -55,6 +55,7 @@ export const createAlumno = async (req, res) => {
     telefonoContacto,
     posicion,
     fechaIngreso,
+    genero,
     observaciones,
   } = req.body;
 
@@ -87,6 +88,7 @@ export const createAlumno = async (req, res) => {
       telefonoContacto,
       posicion,
       fechaIngreso,
+      genero,
       observaciones,
       imagen: imagenUrl, // Guarda la URL de la imagen en la base de datos
     });

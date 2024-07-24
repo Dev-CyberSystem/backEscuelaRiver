@@ -144,6 +144,10 @@ const AlumnoSchema = new Schema({
     type: String,
     required: true,
   },
+  genero: {
+    type: String,
+    required: true
+  },
   observaciones: {
     type: String,
     required: true,
