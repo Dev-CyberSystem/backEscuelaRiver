@@ -8,11 +8,12 @@ import comprobacionJwt from "./middleware/comprobacionJwt.js";
 import alumnoRouter from "./routes/alumnos.route.js";
 import asistenciaRouter from "./routes/asistencias.route.js";
 import pagos from "./routes/pagos.route.js";
-import fs from 'fs';
-import path from 'path';
+import fs from "fs";
+import path from "path";
 import "./db/db_connection.js";
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+import { formatDateMiddleware } from "./middleware/formatDateMiddleware.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -24,20 +25,22 @@ app.use(morgan("dev"));
 app.use(cors());
 
 // Definir la ruta absoluta para la carpeta de subidas
-// const __dirname = path.resolve();
-const uploadsDir = path.join(__dirname, 'uploads');
+const uploadsDir = path.join(__dirname, "uploads");
 
 // Crear la carpeta 'uploads' si no existe
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir);
 }
+
+// Middleware para formatear la fecha
+app.use(formatDateMiddleware);
+
 // Rutas
 app.use("/api", alumnoRouter);
 app.use("/api", userRouter);
 app.use("/api", comprobacionJwt, privateRouter);
-app.use("/api", comprobacionJwt, pagos)
-app.use("/api", comprobacionJwt, asistenciaRouter)
-
+app.use("/api", comprobacionJwt, pagos);
+app.use("/api", comprobacionJwt, asistenciaRouter);
 
 app.get("/", (req, res) => {
   res.send("Bienvenido a la API Escuelas River Tucumán");
