@@ -1,17 +1,48 @@
 import Asistencia from "../models/asistencia.model.js";
 import moment from "moment-timezone";
 
+// export const registrarAsistencia = async (req, res) => {
+//   try {
+//     const { alumnoId, fecha } = req.body;
+//     console.log("Fecha recibida del frontend:", fecha); // Viene desde el front.
+
+//     const fechaActual = moment().tz("America/Argentina/Buenos_Aires").format("YYYY-MM-DD");
+//     console.log("Fecha actual formateada:", fechaActual);
+
+//     // Convertimos la fecha a la zona horaria y formato deseado
+//     const fechaMoment = moment.tz(fecha, "America/Argentina/Buenos_Aires").startOf('day');
+//     console.log("Fecha convertida a moment:", fechaMoment.format());
+
+//     if (fechaMoment.isAfter(fechaActual)) {
+//       return res.status(400).json({ message: "No se puede registrar asistencia para fechas futuras." });
+//     }
+
+//     const asistenciaExistente = await Asistencia.findOne({ alumnoId, fecha: fechaMoment.toDate() });
+//     if (asistenciaExistente) {
+//       return res.status(400).json({ message: "La asistencia ya ha sido registrada para esta fecha." });
+//     }
+
+//     const nuevaAsistencia = new Asistencia({ alumnoId, fecha: fechaMoment.toDate() });
+//     console.log("Fecha a guardar en la base de datos:", nuevaAsistencia.fecha);
+
+//     await nuevaAsistencia.save();
+//     res.status(201).json(nuevaAsistencia);
+//   } catch (error) {
+//     res.status(400).json({ message: "Error al registrar la asistencia", error });
+//   }
+// };
 export const registrarAsistencia = async (req, res) => {
   try {
     const { alumnoId, fecha } = req.body;
-    console.log("Fecha recibida del frontend:", fecha); // Viene desde el front.
+    console.log("Fecha recibida del frontend:", fecha);
 
-    const fechaActual = moment().tz("America/Argentina/Buenos_Aires").format("YYYY-MM-DD");
-    console.log("Fecha actual formateada:", fechaActual);
+    // Fecha actual ajustada al inicio del día en la zona horaria local
+    const fechaActual = moment().tz("America/Argentina/Buenos_Aires").startOf('day');
+    console.log("Fecha actual formateada:", fechaActual.format("YYYY-MM-DD"));
 
-    // Convertimos la fecha a la zona horaria y formato deseado
+    // Fecha recibida ajustada al inicio del día en la zona horaria local
     const fechaMoment = moment.tz(fecha, "America/Argentina/Buenos_Aires").startOf('day');
-    console.log("Fecha convertida a moment:", fechaMoment.format());
+    console.log("Fecha convertida a moment:", fechaMoment.format("YYYY-MM-DD"));
 
     if (fechaMoment.isAfter(fechaActual)) {
       return res.status(400).json({ message: "No se puede registrar asistencia para fechas futuras." });
@@ -31,7 +62,6 @@ export const registrarAsistencia = async (req, res) => {
     res.status(400).json({ message: "Error al registrar la asistencia", error });
   }
 };
-
 export const obtenerAsistencias = async (req, res) => {
   try {
     const { fecha } = req.query;
