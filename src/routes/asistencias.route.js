@@ -3,7 +3,7 @@ import { registrarAsistencia, obtenerAsistencias, obtenerAsistenciasPorAlumno } 
 
 const router = Router();
 
-router.post("/asistencias", registrarAsistencia);
+router.post("/asistencias/registro", registrarAsistencia);
 router.get("/asistencias", obtenerAsistencias);
 router.get("/asistencias/alumno/:id", obtenerAsistenciasPorAlumno);
 
