@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAllAlumnos, getAlumnoById, createAlumno, updateAlumno, deleteAlumno, getAlumnoByDni, getAlumnoByPosicion } from '../controllers/alumnos.controller.js';
+import { getAllAlumnos, getAlumnoById, createAlumno, updateAlumno, deleteAlumno, getAlumnoByDni, getAlumnoByPosicion, updateConvocatedStatus, getCategorias } from '../controllers/alumnos.controller.js';
 import upload from '../middleware/multer.js';
 
 
@@ -12,5 +12,6 @@ router.put('/alumno/:id', upload.single('imagen'), updateAlumno); // Asegúrate 
 router.delete('/alumnos/:id', deleteAlumno);
 router.get('/alumno/dni/:dni', getAlumnoByDni);
 router.get('/alumno/posicion/:posicion', getAlumnoByPosicion);
-
+router.patch('/alumno/:id/convocated', updateConvocatedStatus);
+router.get('/categorias', getCategorias);
 export default router;
