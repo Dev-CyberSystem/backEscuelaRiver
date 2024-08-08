@@ -2,7 +2,7 @@ import Match from '../models/match.js';
 
 
 export const createMatch = async (req, res) => {
-    const { category, date, time, opponent, convocatedPlayers, field, address, result, yellowCards, redCards, goals, yellowCardPlayers, redCardPlayers, observations } = req.body;
+    const { category, date, time, opponent, convocatedPlayers, field, address, result, yellowCards, redCards, goals, yellowCardPlayers, redCardPlayers, observations, location } = req.body;
   
     try {
       const newMatch = new Match({
@@ -20,6 +20,7 @@ export const createMatch = async (req, res) => {
         yellowCardPlayers,
         redCardPlayers,
         observations,
+        location
       });
   
       await newMatch.save();
@@ -78,12 +79,12 @@ export const deleteMatch = async (req, res) => {
 
 export const updateMatch = async (req, res) => {
     const { id } = req.params;
-    const { resultStatus, resultScore, ...otherData } = req.body;
+    const { resultStatus, resultScore, location, ...otherData } = req.body;
   
     try {
       const updatedMatch = await Match.findByIdAndUpdate(
         id,
-        { $set: { resultStatus, resultScore, ...otherData } },
+        { $set: { resultStatus, resultScore, location, ...otherData } },
         { new: true, runValidators: true }
       );
       if (!updatedMatch) {

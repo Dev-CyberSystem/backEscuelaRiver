@@ -90,6 +90,11 @@ const matchSchema = new mongoose.Schema({
   observations: {
     type: String,
     default: '',
+  },
+  location: { 
+    type: String,
+    enum: ['Local', 'Visitante'],
+    required: true,
   }
 }, {
   timestamps: true,
