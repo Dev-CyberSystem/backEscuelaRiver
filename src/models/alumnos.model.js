@@ -84,6 +84,10 @@ const AlumnoSchema = new Schema({
   habilitado: {
     type: Boolean,
     default: true,
+  },
+  convocated: {
+    type: Boolean,
+    default: false,
   }
 }, {
   timestamps: true,
